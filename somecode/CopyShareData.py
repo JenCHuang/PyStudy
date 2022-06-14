@@ -15,6 +15,7 @@ for paths, dirs, files in os.walk(path_local):
 
 print(f'Begin to visit {path_origin}')
 # 訪問老師電腦中的共享資料夾，並複製資料到本地
+skiplist = ['exe','msi','iso']
 for paths, dirs, files in os.walk(path_origin):
     # 若共享資料夾有，而本地資料夾沒有的資料夾，建立該資料夾
     path_last = paths.split(path_origin)[-1]
@@ -22,6 +23,7 @@ for paths, dirs, files in os.walk(path_origin):
         print(f'Create dir:  {path_local+path_last}')
         os.mkdir(path_local+path_last)
     for f in files:
+        if f.split('.')[-1] in skiplist: continue
         fmark = path_last + '\\' + f
         # 老師資料夾有，本地資料夾沒有的檔案，將其複製一份
         if fmark not in lst_file:
